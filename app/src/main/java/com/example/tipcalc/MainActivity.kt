@@ -63,6 +63,28 @@ fun TipScreen(modifier: Modifier = Modifier) {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             placeholder = { Text("0") }
         )
+
+        var tipPercent by remember { mutableFloatStateOf(0f) }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(text = "Чаевые:")
+        Slider(
+            value = tipPercent,
+            onValueChange = { tipPercent = it },
+            valueRange = 0f..25f,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 4.dp)
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(text = "0")
+            Text(text = tipPercent.toInt().toString() + "%")
+            Text(text = "25")
+        }
     }
 }
 
