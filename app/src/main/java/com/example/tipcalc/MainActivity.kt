@@ -15,6 +15,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tipcalc.ui.theme.TipCalcTheme
 
+fun discountForDishes(dishes: Int): Int = when {
+    dishes <= 0  -> 0
+    dishes <= 2  -> 3
+    dishes <= 5  -> 5
+    dishes <= 10 -> 7
+    else         -> 10
+}
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,6 +92,28 @@ fun TipScreen(modifier: Modifier = Modifier) {
             Text(text = "0")
             Text(text = tipPercent.toInt().toString() + "%")
             Text(text = "25")
+        }
+
+        val dishCount = dishCountText.toIntOrNull() ?: 0
+        val discount  = discountForDishes(dishCount)
+        val discountOptions = listOf(3, 5, 7, 10)
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(text = "Скидка:")
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            discountOptions.forEach { option ->
+                RadioButton(
+                    selected = (discount == option),
+                    onClick = null
+                )
+                Text(
+                    text = "$option%",
+                    modifier = Modifier.padding(end = 12.dp)
+                )
+            }
         }
     }
 }
