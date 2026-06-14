@@ -115,6 +115,32 @@ fun TipScreen(modifier: Modifier = Modifier) {
                 )
             }
         }
+
+        val orderAmount    = orderAmountText.toDoubleOrNull() ?: 0.0
+        val tipAmount      = orderAmount * tipPercent / 100.0
+        val discountAmount = orderAmount * discount / 100.0
+        val total          = orderAmount + tipAmount - discountAmount
+
+        Spacer(modifier = Modifier.height(24.dp))
+        HorizontalDivider()
+        Spacer(modifier = Modifier.height(12.dp))
+
+        ResultRow(label = "Чаевые:",  value = "%.2f".format(tipAmount))
+        ResultRow(label = "Скидка:",  value = "-%.2f".format(discountAmount))
+        ResultRow(label = "Итого:",   value = "%.2f".format(total))
+    }
+}
+
+@Composable
+fun ResultRow(label: String, value: String) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 2.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(text = label, style = MaterialTheme.typography.bodyLarge)
+        Text(text = value, style = MaterialTheme.typography.bodyLarge)
     }
 }
 
